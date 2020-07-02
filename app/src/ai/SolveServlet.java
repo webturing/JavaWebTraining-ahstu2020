@@ -18,6 +18,7 @@ public class SolveServlet extends HttpServlet {
     private String password;
     private String url;
     private Connection connection;
+    private Statement stmt;
 
     @Override
     public void init() throws ServletException {
@@ -28,7 +29,7 @@ public class SolveServlet extends HttpServlet {
 
         try {
             Class.forName(diverClass);
-            connection = DriverManager.getConnection(url, userName, password);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,13 +68,16 @@ public class SolveServlet extends HttpServlet {
 
     private boolean save(String key, String result) {
         try {
-            Statement stmt = connection.createStatement();
+            connection = DriverManager.getConnection(url, userName, password);
+            stmt = connection.createStatement();
             PreparedStatement ps = connection.prepareStatement("insert into point24(numbers,solution) value(?,?)");
 
             ps.setString(1, key);
             ps.setString(2, result);
             int x = ps.executeUpdate();
             System.err.println("写入数据库成功");
+            stmt.close();
+            connection.close();
             return x > 0;
 
         } catch (Exception e) {
@@ -87,7 +91,8 @@ public class SolveServlet extends HttpServlet {
         String ans = null;
 
         try {
-            Statement stmt = connection.createStatement();//key
+            connection = DriverManager.getConnection(url, userName, password);
+            stmt = connection.createStatement();//key
             PreparedStatement ps = connection.prepareStatement("select solution from point24 where numbers=? LIMIT 1");
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
@@ -99,6 +104,7 @@ public class SolveServlet extends HttpServlet {
 
             rs.close();
             stmt.close();
+            connection.close();
 
         } catch (Exception e) {
             e.printStackTrace();

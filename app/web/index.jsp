@@ -65,6 +65,8 @@
     <input type="text" name="D" />
     <input type="submit" value="GO" />
 </form>
-<%=session.getAttribute("result")%>
+<div>计算结果：<%=session.getAttribute("result")%>
+</div>
+<div>计算耗时：<%=session.getAttribute("elapse")%>秒</div>
 </body>
 </html>

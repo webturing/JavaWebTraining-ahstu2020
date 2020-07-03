@@ -1,6 +1,9 @@
 package ai;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 public class Engine {
     private static final int MAX_RAND_SEARCH_COUNT = 5040;
@@ -16,6 +19,12 @@ public class Engine {
         System.out.println(bruteSearch(new int[]{1, 2, 3, 4}));
     }
 
+    /**
+     * 随机搜索器可以保证在有解的情况下，以较大的概率(95%)以上搜到问题的解，但是比较耗时，极端情况下可能有解也找不到解
+     *
+     * @param a
+     * @return
+     */
     private static List<String> randSearcher(int[] a) {
         for (int j = 0; j < 4 * 4 * 4; j++) {
             String[] ops = new String[3];
@@ -59,8 +68,12 @@ public class Engine {
         return buffer.toString();
     }
 
+    /**
+     * 确定性搜索器，保证每次搜到的都是字典序最小的solution,如果搜不到一定无解
+     * @param arr
+     * @return
+     */
     public static List<String> bruteSearch(int[] arr) {
-        List<String> exp = new ArrayList<String>();
         for (int cc = 0; cc < Permutation.FAC[4]; cc++) {
             int[] idx = Permutation.codel(cc, 4);
             String a = String.valueOf(arr[idx[0]]);
@@ -80,15 +93,12 @@ public class Engine {
                                 {a, b, c, X, d, Y, Z},
                                 {a, b, c, d, X, Y, Z},}) {
                             if (Evaluator.eval(ee) == TARGET) {
-                                exp.addAll(Arrays.asList(ee));
-                                return exp;
-                                //return Arrays.asList(ee);
+                                return Arrays.asList(ee);
                             }
                         }
                     }
         }
-        exp.clear();
-        return exp;
+        return null;
     }
 
 }

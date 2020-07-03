@@ -20,7 +20,7 @@ public class RPolandExpression {
     public static double eval(List<String> exp) {
         Stack<Double> S = new Stack<>();
         for (String tok : exp) {
-            if (isNumber(tok)) {
+            if (Evaluator.isNumber(tok)) {
                 S.push(Double.parseDouble(tok));
             } else {
                 if (S.isEmpty()) {
@@ -67,12 +67,4 @@ public class RPolandExpression {
 
     }
 
-    public static boolean isNumber(String tok) {
-        try {
-            Double.parseDouble(tok);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }

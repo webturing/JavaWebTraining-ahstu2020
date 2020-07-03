@@ -39,7 +39,7 @@ public class Engine {
             int tot = 0;
             while (++tot < MAX_RAND_SEARCH_COUNT) {
                 Collections.shuffle(exp);
-                double result = RPolandExpression.eval(exp);
+                double result = Evaluator.eval(exp);
                 if (result == TARGET) {
                     return exp;
                 }

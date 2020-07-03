@@ -51,6 +51,7 @@ public class SolveServlet extends HttpServlet {
         } catch (Exception e) {
 
         }
+        long start=System.currentTimeMillis();
         int[] arr = new int[]{a, b, c, d};
         Arrays.sort(arr);
         String key = Arrays.toString(arr);
@@ -60,8 +61,10 @@ public class SolveServlet extends HttpServlet {
             result = ai.Engine.solve24(a, b, c, d);
             save(key, result);
         }
+        long end=System.currentTimeMillis();
 
         request.getSession().setAttribute("result", result);
+        request.getSession().setAttribute("elapse", (end-start)/1000.0);
         response.sendRedirect("index.jsp");
 
     }

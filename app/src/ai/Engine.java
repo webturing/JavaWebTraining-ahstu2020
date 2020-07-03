@@ -56,6 +56,6 @@ public class Engine {
         StringBuffer buffer = new StringBuffer();
         BinaryTree binaryTree = BinaryTree.genTreeFromSuffixExpression(exp);
         binaryTree.midVisit(buffer);
-        return buffer.toString().substring(1,buffer.length()-1);
+        return buffer.toString();
     }
 }
